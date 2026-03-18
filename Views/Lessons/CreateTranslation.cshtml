@@ -1,0 +1,35 @@
+﻿@model Afri.Models.LessonTranslation
+
+<div class="container">
+    <h4>New Lesson Translation</h4>
+    <hr />
+    <form asp-action="CreateTranslation">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label>Select Lesson</label>
+                    <select asp-for="LessonId" class="form-control" asp-items="ViewBag.LessonId"></select>
+                </div>
+                <div class="form-group mb-3">
+                    <label>Select Language</label>
+                    <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
+                </div>
+                <div class="form-group mb-3">
+                    <label>Translated Content</label>
+                    <textarea asp-for="TranslatedContent" class="form-control" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label>Voice Explanation URL</label>
+                    <input asp-for="VoiceExplanationUrl" class="form-control" placeholder="https://storage.afri.com/audio/lesson1.mp3" />
+                </div>
+                <div class="form-check mb-3">
+                    <input asp-for="IsHumanValidated" class="form-check-input" />
+                    <label class="form-check-label">Mark as Human Validated</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Save Translation</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,103 @@
+@model Afri.ViewModels.QuizCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Quiz";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm border-0 rounded-4">
+
+                <div class="card-header bg-primary text-white text-center p-4">
+                    <h3>Create Quiz</h3>
+                </div>
+
+                <div class="card-body bg-light p-4">
+
+                    @if (Model.TopicName != null)
+                    {
+                        <div class="alert alert-info">
+                            <strong>Subject:</strong> @Model.SubjectName <br />
+                            <strong>Topic:</strong> @Model.TopicName
+                        </div>
+                    }
+
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
+
+                        @if (Model.TopicName != null)
+                        {
+                            <input type="hidden" asp-for="TopicId" />
+                        }
+                        else
+                        {
+                            <div class="mb-3">
+                                <label asp-for="TopicId" class="form-label fw-bold">Topic</label>
+                                <select asp-for="TopicId" class="form-select" asp-items="Model.Topics">
+                                    <option value="">-- Select a topic --</option>
+                                </select>
+                                <span asp-validation-for="TopicId" class="text-danger"></span>
+                            </div>
+                        }
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label fw-bold"></label>
+                            <input asp-for="Title" class="form-control" placeholder="Quiz title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="TimeLimit" class="form-label fw-bold"></label>
+                                <input asp-for="TimeLimit" type="number" class="form-control" />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PassingScore" class="form-label fw-bold"></label>
+                                <input asp-for="PassingScore" type="number" class="form-control" />
+                            </div>
+
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input asp-for="IsPremium" class="form-check-input" />
+                            <label asp-for="IsPremium" class="form-check-label">Premium Quiz</label>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            @if (Model.SubjectId != null)
+                            {
+                                <a href="/Subjects/Details/@Model.SubjectId" class="btn btn-secondary">Cancel</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            }
+
+                            <button type="submit" class="btn btn-primary">
+                                Create Quiz
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Afri.Models.User>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h2 class="mb-3">Users</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Institution</th>
+            <th>Grade</th>
+            <th>Role</th>
+            <th width="150">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FullName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Institution?.Name</td>
+                <td>@item.GradeLevel?.Name</td>
+                <td>@item.Role?.Name</td>
+                <td>
+                    <a class="btn btn-sm btn-primary"
+                       asp-controller="Users"
+                       asp-action="AssignRole"
+                       asp-route-id="@item.Id">
+                        Assign Role
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

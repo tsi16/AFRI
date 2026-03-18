@@ -1,0 +1,130 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+:root {
+    --sidebar-width: 260px;
+    --primary-color: #4e73df;
+    --secondary-color: #858796;
+    --dark-bg: #1a1c23;
+}
+
+body {
+    background-color: #f8f9fc;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    position: fixed;
+    background: var(--dark-bg);
+    color: white;
+    transition: all 0.3s;
+}
+
+    .sidebar .nav-link {
+        color: rgba(255,255,255,.8);
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        border-radius: 0 50px 50px 0;
+        margin-right: 10px;
+    }
+
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+/* Main Content Area */
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+}
+
+/* Professional Cards */
+.card-stats {
+    border: none;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+/* User Profile Header */
+.topbar {
+    background: white;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* AfriLearn home enhancements — append to your existing file */
+
+.hero-section {
+    min-height: 75vh;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(249,250,252,1) 60%);
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+}
+
+    .hero-section .floating-3d-logo {
+        transform: translateY(-8px);
+        transition: transform 0.8s ease, filter 0.8s ease;
+    }
+
+        .hero-section .floating-3d-logo:hover {
+            transform: translateY(-18px) rotate(-3deg);
+        }
+
+/* Pricing card highlight */
+.pricing-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 12px;
+}
+
+    .pricing-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(16,24,40,0.08);
+    }
+
+/* Subtle responsive spacing */
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+}
+
+/* Ensure hero wave svg sits on top of next section */
+.hero-section svg {
+    display: block;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}

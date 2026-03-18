@@ -1,0 +1,103 @@
+@model List<Afri.Models.TopicMaterial>
+@inject Afri.Utilities.CurrentUser CurrentUser
+@{
+    var topic = ViewBag.Topic as Afri.Models.Topic;
+    ViewData["Title"] = topic != null ? $"Materials - {topic.Title}" : "Materials";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a asp-controller="Subjects" asp-action="Index">Subjects</a></li>
+                    @if (topic?.Subject != null)
+                    {
+                        <li class="breadcrumb-item"><a asp-controller="Subjects" asp-action="Details" asp-route-id="@topic.SubjectId">@topic.Subject.Name</a></li>
+                    }
+                    <li class="breadcrumb-item active">@(topic?.Title ?? "Topic") - Materials</li>
+                </ol>
+            </nav>
+            <h2 class="fw-bold mb-0"><i class="bi bi-folder2-open text-primary me-2"></i>@(topic?.Title ?? "Topic") — Materials &amp; Videos</h2>
+        </div>
+        <div>
+            <a asp-controller="Subjects" asp-action="Details" asp-route-id="@topic?.SubjectId" class="btn btn-outline-secondary">Back to subject</a>
+            @if (CurrentUser.IsInstructor())
+            {
+                <a asp-action="Create" asp-route-topicId="@topic?.Id" class="btn btn-primary ms-2"><i class="bi bi-plus-lg me-1"></i>Upload material</a>
+            }
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">@TempData["Error"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+    }
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-file-earmark-plus display-4 text-muted"></i>
+                <p class="text-muted mb-0 mt-2">No materials or videos for this topic yet.</p>
+                @if (CurrentUser.IsInstructor())
+                {
+                    <a asp-action="Create" asp-route-topicId="@topic?.Id" class="btn btn-primary mt-3">Upload first material</a>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var m in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+                        <div class="card-body">
+                            <span class="badge bg-secondary mb-2">@m.ResourceType</span>
+                            <h5 class="card-title fw-bold">@m.Title</h5>
+                            @if (!string.IsNullOrEmpty(m.FileName))
+                            {
+                                <p class="small text-muted mb-1">@m.FileName</p>
+                            }
+                            @if (m.FileSizeBytes.HasValue && m.FileSizeBytes > 0)
+                            {
+                                <p class="small text-muted mb-2">@((m.FileSizeBytes.Value / 1024.0).ToString("0.0")) KB</p>
+                            }
+                            <p class="small text-muted mb-0">Uploaded @m.CreatedDate?.ToString("MMM d, yyyy")</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 pt-0 d-flex gap-2">
+                            @if (!string.IsNullOrEmpty(m.ExternalUrl))
+                            {
+                                @if (m.ResourceType == "Video")
+                                {
+                                    <a asp-action="Watch" asp-route-id="@m.Id" class="btn btn-primary btn-sm flex-grow-1"><i class="bi bi-play-fill me-1"></i>Watch</a>
+                                }
+                                else
+                                {
+                                    <a href="@m.ExternalUrl" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm flex-grow-1"><i class="bi bi-box-arrow-up-right me-1"></i>Open</a>
+                                }
+                            }
+                            else
+                            {
+                                <a asp-action="Download" asp-route-id="@m.Id" class="btn btn-primary btn-sm flex-grow-1"><i class="bi bi-download me-1"></i>Download</a>
+                            }
+                            @if (CurrentUser.IsInstructor())
+                            {
+                                <form asp-action="Delete" asp-route-id="@m.Id" method="post" class="d-inline" onsubmit="return confirm('Remove this material?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

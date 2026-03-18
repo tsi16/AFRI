@@ -1,0 +1,206 @@
+@{
+    ViewData["Title"] = "Create Question";
+    var quizId = ViewBag.QuizId;
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+
+            <div class="card shadow border-0 rounded-4">
+
+                <div class="card-header bg-primary text-white p-4 text-center">
+                    <h3>Add Question to Quiz</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="CreateQuestion" method="post">
+
+                        <input type="hidden" name="quizId" value="@quizId" />
+
+                        <div class="mb-3">
+                            <label class="fw-bold">Question Text</label>
+<textarea name="questionText" class="form-control" required></textarea>
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <label>Type</label>
+                                <select name="questionType" id="QuestionType" class="form-select" onchange="handleQuestionTypeChange()">
+
+                                    <option value="Multiple Choice">Multiple Choice</option>
+                                    <option value="Multiple Answer">Multiple Answer</option>
+                                    <option value="True/False">True/False</option>
+                                    <option value="Short Answer">Short Answer</option>
+                                    <option value="Fill in the Blank">Fill in the Blank</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Difficulty</label>
+                                <select name="difficultyLevel" class="form-select">
+
+                                    <option>Easy</option>
+                                    <option>Medium</option>
+                                    <option>Hard</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Marks</label>
+                                <input type="number" name="marks" value="1" class="form-control" min="1" required />
+                            </div>
+
+                        </div>
+
+
+                        <hr class="mt-4" />
+
+
+                        <div id="optionsSection">
+
+                            <div class="d-flex justify-content-between mb-3">
+
+                                <h5>Answer Options</h5>
+
+                                <button type="button" class="btn btn-sm btn-primary" onclick="addOption()" id="addOptionBtn">
+                                    Add Option
+                                </button>
+
+                            </div>
+
+                            <div class="row" id="optionsContainer"></div>
+
+                        </div>
+
+
+                        <div id="shortAnswerSection" style="display:none">
+
+                            <label>Correct Answer</label>
+
+                            <input type="text" name="optionsText" class="form-control" />
+
+                        </div>
+
+
+                        <div class="mt-4 d-flex justify-content-between">
+
+                            <a asp-action="ManageQuestions" asp-route-quizId="@quizId" class="btn btn-secondary">
+                                Cancel
+                            </a>
+
+                            <div>
+
+                                <button type="submit" name="submitAction" value="Save" class="btn btn-primary">
+                                    Save Question
+                                </button>
+
+                                <button type="submit" name="submitAction" value="SaveAndAddAnother" class="btn btn-success">
+                                    Save & Add Another
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+
+        let optionIndex = 0;
+
+        function handleQuestionTypeChange(){
+
+        let type = document.getElementById("QuestionType").value;
+
+        let optionsSection = document.getElementById("optionsSection");
+        let shortAnswerSection = document.getElementById("shortAnswerSection");
+        let container = document.getElementById("optionsContainer");
+
+        container.innerHTML="";
+        optionIndex=0;
+
+        if(type==="Short Answer" || type==="Fill in the Blank"){
+
+        optionsSection.style.display="none";
+        shortAnswerSection.style.display="block";
+
+        }else{
+
+        optionsSection.style.display="block";
+        shortAnswerSection.style.display="none";
+
+        if(type==="True/False"){
+
+        addOption("True",true);
+        addOption("False",true);
+
+        }else{
+
+        for(let i=0;i<4;i++) addOption();
+
+        }
+
+        }
+
+        }
+
+
+        function addOption(text="",readonly=false){
+
+        let type=document.getElementById("QuestionType").value;
+
+        let inputType = type==="Multiple Answer" ? "checkbox":"radio";
+
+        let html=`
+
+        <div class="col-md-6 mb-3 option-block">
+
+        <div class="border rounded p-3">
+
+        <div class="d-flex justify-content-between">
+
+        <label>Option</label>
+
+        <input type="${inputType}" name="correctOptionIndices" value="${optionIndex}">
+
+        </div>
+
+        <input type="text"
+        name="optionsText"
+        class="form-control mt-2"
+        value="${text}"
+        ${readonly?"readonly":""}
+        required>
+
+        </div>
+
+        </div>
+
+        `;
+
+        document.getElementById("optionsContainer").insertAdjacentHTML("beforeend",html);
+
+        optionIndex++;
+
+        }
+
+        document.addEventListener("DOMContentLoaded",handleQuestionTypeChange);
+
+    </script>
+
+}

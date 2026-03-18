@@ -1,0 +1,64 @@
+﻿@model Afri.Models.LessonTranslation
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>LessonTranslation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="LessonId" class="control-label"></label>
+                <select asp-for="LessonId" class="form-control" asp-items="ViewBag.LessonId"></select>
+                <span asp-validation-for="LessonId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LanguageId" class="control-label"></label>
+                <select asp-for="LanguageId" class="form-control" asp-items="ViewBag.LanguageId"></select>
+                <span asp-validation-for="LanguageId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TranslatedContent" class="control-label"></label>
+                <input asp-for="TranslatedContent" class="form-control" />
+                <span asp-validation-for="TranslatedContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoiceExplanationUrl" class="control-label"></label>
+                <input asp-for="VoiceExplanationUrl" class="form-control" />
+                <span asp-validation-for="VoiceExplanationUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsHumanValidated" class="control-label"></label>
+                <input asp-for="IsHumanValidated" class="form-control" />
+                <span asp-validation-for="IsHumanValidated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedDate" class="control-label"></label>
+                <input asp-for="ModifiedDate" class="form-control" />
+                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

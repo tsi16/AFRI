@@ -1,0 +1,365 @@
+@model Afri.Models.HomeDashboardViewModel
+@inject Afri.Utilities.CurrentUser CurrentUser
+@{
+    if (Model == null) { <p class="text-muted">Loading dashboard…</p> return; }
+    var userFullName = Model.UserName;
+}
+
+<style>
+    .dashboard-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: none;
+        border-radius: 14px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.04);
+    }
+    .dashboard-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 20px -4px rgba(0,0,0,0.12);
+    }
+    .icon-box {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+    .icon-box.primary { background: rgba(79, 70, 229, 0.12); color: #4f46e5; }
+    .icon-box.success { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+    .icon-box.warning { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+    .icon-box.danger { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
+    .icon-box.info { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
+    .activity-item { padding: 0.9rem 0; border-bottom: 1px solid #f1f5f9; }
+    .activity-item:last-child { border-bottom: none; }
+    .streak-badge { font-size: 0.85rem; }
+</style>
+
+<div class="animate-fade-up">
+
+@if (Model.IsStudent)
+{
+    <!-- STUDENT DASHBOARD -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card dashboard-card bg-primary text-white overflow-hidden position-relative">
+                <div class="position-absolute end-0 top-0 opacity-20" style="transform: translate(15%, -15%);"><i class="bi bi-mortarboard-fill" style="font-size: 11rem;"></i></div>
+                <div class="card-body p-4 position-relative z-1">
+                    <h3 class="fw-bold mb-2">Ready to learn, @userFullName?</h3>
+                    <p class="mb-4 text-white-50" style="max-width: 520px;">Pick up where you left off. Your progress and achievements are below.</p>
+                    <a href="/Subjects" class="btn btn-light fw-bold px-4 rounded-pill"><i class="bi bi-journal-bookmark me-2 text-primary"></i>Browse subjects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="icon-box primary me-3"><i class="bi bi-book-half"></i></div>
+                    <div>
+                        <h6 class="text-muted mb-0 fw-bold text-uppercase" style="font-size: 0.7rem; letter-spacing: 0.5px;">My subjects</h6>
+                        <h3 class="fw-bold mb-0">@Model.EnrolledSubjectsCount</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="icon-box success me-3"><i class="bi bi-patch-check"></i></div>
+                    <div>
+                        <h6 class="text-muted mb-0 fw-bold text-uppercase" style="font-size: 0.7rem; letter-spacing: 0.5px;">Quizzes done</h6>
+                        <h3 class="fw-bold mb-0">@Model.CompletedQuizzesCount</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="icon-box info me-3"><i class="bi bi-journal-check"></i></div>
+                    <div>
+                        <h6 class="text-muted mb-0 fw-bold text-uppercase" style="font-size: 0.7rem; letter-spacing: 0.5px;">Lessons done</h6>
+                        <h3 class="fw-bold mb-0">@Model.LessonsCompletedCount</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="icon-box warning me-3"><i class="bi bi-trophy"></i></div>
+                    <div>
+                        <h6 class="text-muted mb-0 fw-bold text-uppercase" style="font-size: 0.7rem; letter-spacing: 0.5px;">Leaderboard</h6>
+                        <h3 class="fw-bold mb-0">#@(Model.MyLeaderboardRank > 0 ? Model.MyLeaderboardRank.ToString() : "—")</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card dashboard-card h-100">
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">Recommended lessons</h5>
+                    <a href="/Subjects" class="btn btn-sm btn-outline-primary rounded-pill">View all subjects</a>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.RecommendedLessons.Any())
+                    {
+                        @foreach (var lesson in Model.RecommendedLessons)
+                        {
+                            <div class="d-flex align-items-center justify-content-between p-3 rounded-3 mb-2 border bg-light">
+                                <div class="d-flex align-items-center">
+                                    <div class="icon-box primary me-3"><i class="bi bi-play-circle"></i></div>
+                                    <div>
+                                        <h6 class="fw-bold mb-0">@lesson.LessonTitle</h6>
+                                        <p class="text-muted small mb-0">@lesson.SubjectName @(lesson.GradeName != null ? "• " + lesson.GradeName : "")</p>
+                                    </div>
+                                </div>
+                                <a href="/Subjects/Details/@lesson.SubjectId" class="btn btn-primary btn-sm rounded-pill">Open</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">No lessons yet. Browse subjects to get started.</p>
+                        <a href="/Subjects" class="btn btn-outline-primary btn-sm mt-2">Browse subjects</a>
+                    }
+                </div>
+            </div>
+
+            <div class="card dashboard-card mt-4">
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                    <h5 class="fw-bold mb-0">My progress</h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.RecentProgress.Any())
+                    {
+                        @foreach (var p in Model.RecentProgress)
+                        {
+                            <div class="activity-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="fw-bold mb-0" style="font-size: 0.95rem;">@p.LessonTitle</h6>
+                                    <p class="text-muted small mb-0">@p.SubjectName • @(p.LastUpdated?.ToString("MMM d, yyyy") ?? "")</p>
+                                </div>
+                                @if (p.Score.HasValue) { <span class="badge bg-success">@p.Score.Value.ToString("0")%</span> }
+                            </div>
+                        }
+                        <div class="mt-3"><a href="/StudentProgress" class="small fw-bold text-primary text-decoration-none">View all progress <i class="bi bi-arrow-right"></i></a></div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">No progress yet. Complete lessons to see your progress here.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                    <h5 class="fw-bold mb-0">Leaderboard</h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.LeaderboardTop.Any())
+                    {
+                        @foreach (var entry in Model.LeaderboardTop)
+                        {
+                            <div class="activity-item d-flex align-items-center @(entry.IsCurrentUser ? "bg-primary bg-opacity-10 rounded-3 px-2 mx-n2" : "")">
+                                <span class="fw-bold text-muted me-2" style="min-width: 1.5rem;">@entry.Rank</span>
+                                <img src="https://ui-avatars.com/api/?name=@(Uri.EscapeDataString(entry.StudentName))&background=@(entry.IsCurrentUser ? "4f46e5" : "94a3b8")&color=fff" class="rounded-circle me-2" width="36" height="36" alt="">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0 fw-bold @(entry.IsCurrentUser ? "text-primary" : "")" style="font-size: 0.9rem;">@(entry.IsCurrentUser ? "You" : entry.StudentName)</h6>
+                                </div>
+                                <span class="badge @(entry.IsCurrentUser ? "bg-primary" : "bg-light text-dark border")">@(entry.Points ?? 0) pts</span>
+                            </div>
+                        }
+                        <div class="mt-3 text-center">
+                            <a href="/Leaderboard" class="text-decoration-none small fw-bold text-primary">Full rankings <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted small mb-0">No leaderboard data yet. Take quizzes to earn points.</p>
+                        <a href="/Subjects" class="btn btn-sm btn-outline-primary mt-2">Browse subjects</a>
+                    }
+                </div>
+            </div>
+
+            <div class="card dashboard-card mt-4">
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                    <h5 class="fw-bold mb-0">Achievements</h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.Achievements.Any())
+                    {
+                        @foreach (var a in Model.Achievements)
+                        {
+                            <div class="activity-item">
+                                <div class="d-flex align-items-center">
+                                    <div class="icon-box warning me-2"><i class="bi bi-trophy-fill"></i></div>
+                                    <div>
+                                        <h6 class="fw-bold mb-0" style="font-size: 0.9rem;">@a.Name</h6>
+                                        @if (!string.IsNullOrEmpty(a.Description)) { <p class="text-muted small mb-0">@a.Description</p> }
+                                        <p class="small mb-0">@(a.Points ?? 0) pts • @a.EarnedDate?.ToString("MMM d")</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted small mb-0">Earn achievements by completing lessons and quizzes.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- INSTRUCTOR / ADMIN DASHBOARD -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card dashboard-card border-0 overflow-hidden" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                <div class="card-body p-5 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div>
+                        <h2 class="fw-bold text-white mb-2">@(CurrentUser.GetUserRole() == "Admin" ? "Admin" : "Instructor") dashboard</h2>
+                        <p class="text-white-50 mb-0" style="max-width: 580px;">Manage curriculum, quizzes, and track engagement. All data below is live from your database.</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/Subjects/Create" class="btn btn-primary px-4 py-2 fw-bold rounded-pill shadow-sm"><i class="bi bi-plus-lg me-2"></i>New subject</a>
+                        <a href="/Subjects" class="btn btn-outline-light px-4 py-2 fw-bold rounded-pill">Manage subjects</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="icon-box primary me-3"><i class="bi bi-journal-text"></i></div>
+                    <div>
+                        <h6 class="text-muted mb-0 fw-bold text-uppercase" style="font-size: 0.7rem;">Total lessons</h6>
+                        <h3 class="fw-bold mb-0">@Model.TotalLessons</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="icon-box warning me-3"><i class="bi bi-question-circle"></i></div>
+                    <div>
+                        <h6 class="text-muted mb-0 fw-bold text-uppercase" style="font-size: 0.7rem;">Quiz questions</h6>
+                        <h3 class="fw-bold mb-0">@Model.TotalQuizQuestions</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="icon-box success me-3"><i class="bi bi-people"></i></div>
+                    <div>
+                        <h6 class="text-muted mb-0 fw-bold text-uppercase" style="font-size: 0.7rem;">Students</h6>
+                        <h3 class="fw-bold mb-0">@Model.ActiveStudentsCount</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex align-items-center">
+                    <div class="icon-box danger me-3"><i class="bi bi-chat-right-text"></i></div>
+                    <div>
+                        <h6 class="text-muted mb-0 fw-bold text-uppercase" style="font-size: 0.7rem;">AI questions</h6>
+                        <h3 class="fw-bold mb-0">@Model.AIInteractionsCount</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card dashboard-card h-100">
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                    <h5 class="fw-bold mb-0">Quick actions</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <a href="/Subjects" class="text-decoration-none text-dark">
+                                <div class="p-4 border rounded-3 h-100 dashboard-card">
+                                    <div class="icon-box primary mb-3"><i class="bi bi-journal-album"></i></div>
+                                    <h6 class="fw-bold">Subjects & topics</h6>
+                                    <p class="text-muted small mb-0">Add topics and lessons to your subjects.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="/Quizs/Index" class="text-decoration-none text-dark">
+                                <div class="p-4 border rounded-3 h-100 dashboard-card">
+                                    <div class="icon-box warning mb-3"><i class="bi bi-clipboard-check"></i></div>
+                                    <h6 class="fw-bold">Quizzes</h6>
+                                    <p class="text-muted small mb-0">Create and manage quizzes per topic.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="/Users" class="text-decoration-none text-dark">
+                                <div class="p-4 border rounded-3 h-100 dashboard-card">
+                                    <div class="icon-box success mb-3"><i class="bi bi-people"></i></div>
+                                    <h6 class="fw-bold">Users</h6>
+                                    <p class="text-muted small mb-0">View students and assign roles.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="/AiinteractionFeedbacks/Index" class="text-decoration-none text-dark">
+                                <div class="p-4 border rounded-3 h-100 dashboard-card">
+                                    <div class="icon-box danger mb-3"><i class="bi bi-robot"></i></div>
+                                    <h6 class="fw-bold">AI feedback</h6>
+                                    <p class="text-muted small mb-0">Review student questions and AI answers.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                    <h5 class="fw-bold mb-0">Recent activity</h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.InstructorRecentActivity.Any())
+                    {
+                        @foreach (var a in Model.InstructorRecentActivity)
+                        {
+                            <div class="activity-item">
+                                <p class="text-muted small mb-1">@a.TimeAgo</p>
+                                <h6 class="fw-bold mb-0" style="font-size: 0.9rem;">@a.Title</h6>
+                                @if (!string.IsNullOrEmpty(a.Detail)) { <p class="text-dark small mb-0">@a.Detail</p> }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted small mb-0">No recent activity yet. Student quiz attempts and AI questions will appear here.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+</div>

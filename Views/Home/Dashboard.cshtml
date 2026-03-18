@@ -1,0 +1,343 @@
+﻿@using Afri.Utilities
+@inject Afri.Utilities.CurrentUser CurrentUser
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div style="background:#f8fafc;min-height:100vh;font-family:var(--font-inter);">
+
+    <!-- ═══════════════════════════════════════════════════════
+         DASHBOARD NAVBAR
+    ════════════════════════════════════════════════════════ -->
+    <nav class="navbar-afri" style="padding:14px 0;">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">
+                <div style="width:36px;height:36px;background:linear-gradient(135deg,#2563eb,#c5a059);border-radius:9px;display:flex;align-items:center;justify-content:center;">
+                    <i class="bi bi-mortarboard-fill" style="color:#fff;font-size:16px;"></i>
+                </div>
+                <span class="nav-logo-text">Afri<span>Learn</span></span>
+            </a>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <div style="width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                    <i class="bi bi-bell" style="color:rgba(255,255,255,0.7);font-size:1rem;"></i>
+                </div>
+                <div style="width:36px;height:36px;background:linear-gradient(135deg,#2563eb,#c5a059);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:0.85rem;">
+                    ST
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-afri" style="padding-top:32px;padding-bottom:32px;">
+
+        <!-- ═══════════════════════════════════════════════════
+             WELCOME BANNER
+        ════════════════════════════════════════════════════ -->
+        <div class="dashboard-hero">
+            <div style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;position:relative;z-index:1;">
+                <div>
+                    <div style="font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:8px;">
+                        @DateTime.Now.ToString("dddd, MMMM d, yyyy")
+                    </div>
+                    <h1 style="font-size:2rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.5px;">
+                        Welcome Back! 👋
+                    </h1>
+                    <p style="color:rgba(255,255,255,0.7);font-size:1rem;margin-bottom:24px;max-width:480px;">
+                        You've mastered <strong style="color:#fff;">4 lessons</strong> this week. Your AI tutor is ready to help you with
+                        <strong style="color:#c5a059;">Biology Chapter 3.</strong>
+                    </p>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                        <a href="/Subjects" style="background:#fff;color:#2563eb;border-radius:50px;padding:10px 24px;font-weight:700;text-decoration:none;font-size:0.9rem;display:inline-flex;align-items:center;gap:8px;">
+                            <i class="bi bi-play-fill"></i>
+                            Resume Journey
+                        </a>
+                        <button style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:50px;padding:10px 24px;font-weight:600;cursor:pointer;font-size:0.9rem;display:inline-flex;align-items:center;gap:8px;">
+                            <i class="bi bi-calendar3"></i>
+                            Study Plan
+                        </button>
+                    </div>
+                </div>
+                <div style="text-align:right;">
+                    <i class="bi bi-rocket-takeoff" style="font-size:7rem;color:rgba(255,255,255,0.12);"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+             STATS ROW
+        ════════════════════════════════════════════════════ -->
+        <div class="grid-stats">
+
+            <div class="feature-card" style="padding:24px;display:flex;align-items:center;gap:16px;">
+                <div style="width:48px;height:48px;background:rgba(37,99,235,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="bi bi-book-open" style="color:#2563eb;font-size:1.3rem;"></i>
+                </div>
+                <div>
+                    <div style="font-size:1.6rem;font-weight:800;color:#0f172a;line-height:1;">24</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">Lessons Completed</div>
+                </div>
+            </div>
+
+            <div class="feature-card" style="padding:24px;display:flex;align-items:center;gap:16px;">
+                <div style="width:48px;height:48px;background:rgba(16,185,129,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="bi bi-clock-history" style="color:#10b981;font-size:1.3rem;"></i>
+                </div>
+                <div>
+                    <div style="font-size:1.6rem;font-weight:800;color:#0f172a;line-height:1;">18h</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">Study Hours</div>
+                </div>
+            </div>
+
+            <div class="feature-card" style="padding:24px;display:flex;align-items:center;gap:16px;">
+                <div style="width:48px;height:48px;background:rgba(245,158,11,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="bi bi-trophy" style="color:#f59e0b;font-size:1.3rem;"></i>
+                </div>
+                <div>
+                    <div style="font-size:1.6rem;font-weight:800;color:#0f172a;line-height:1;">82%</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">Quiz Score Avg</div>
+                </div>
+            </div>
+
+            <div class="feature-card" style="padding:24px;display:flex;align-items:center;gap:16px;">
+                <div style="width:48px;height:48px;background:rgba(239,68,68,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="bi bi-fire" style="color:#ef4444;font-size:1.3rem;"></i>
+                </div>
+                <div>
+                    <div style="font-size:1.6rem;font-weight:800;color:#0f172a;line-height:1;">7 🔥</div>
+                    <div style="font-size:0.8rem;color:#94a3b8;margin-top:4px;">Day Streak</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════
+             MAIN GRID
+        ════════════════════════════════════════════════════ -->
+        <div class="grid-dashboard-main">
+
+            <!-- LEFT COLUMN -->
+            <div style="display:flex;flex-direction:column;gap:24px;">
+
+                <!-- Quick Actions -->
+                <div>
+                    <h5 style="font-weight:700;color:#0f172a;margin-bottom:16px;">Quick Actions</h5>
+                    <div class="grid-quick-actions">
+
+                        <!-- My Bookshelf -->
+                        <div class="quick-action-card" style="background:#fff;">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                                <div style="width:44px;height:44px;background:rgba(37,99,235,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                                    <i class="bi bi-book" style="color:#2563eb;font-size:1.2rem;"></i>
+                                </div>
+                                <span style="background:#f1f5f9;color:#64748b;border-radius:50px;padding:3px 10px;font-size:0.75rem;font-weight:600;">12 Subjects</span>
+                            </div>
+                            <h6 style="font-weight:700;color:#0f172a;margin-bottom:6px;">My Bookshelf</h6>
+                            <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:16px;">Explore Grade 9–12 curriculum organized by topic.</p>
+                            <a href="/Subjects" style="display:block;text-align:center;padding:9px;border-radius:50px;border:1.5px solid #2563eb;color:#2563eb;font-weight:600;font-size:0.85rem;text-decoration:none;">
+                                Open Library
+                            </a>
+                        </div>
+
+                        <!-- AI Quick-Chat -->
+                        <div class="quick-action-card" style="background:#0f172a;">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                                <div style="width:44px;height:44px;background:rgba(197,160,89,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                                    <i class="bi bi-cpu" style="color:#c5a059;font-size:1.2rem;"></i>
+                                </div>
+                            </div>
+                            <h6 style="font-weight:700;color:#fff;margin-bottom:6px;">AI Quick-Chat</h6>
+                            <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:16px;">Got a quick question? Ask in Amharic or Oromo now.</p>
+                            <button style="display:block;width:100%;padding:9px;border-radius:50px;background:linear-gradient(135deg,#c5a059,#f0c97a);color:#0f172a;font-weight:700;font-size:0.85rem;border:none;cursor:pointer;">
+                                Launch AI Tutor
+                            </button>
+                        </div>
+
+                        <!-- Practice Exams -->
+                        <div class="quick-action-card" style="background:#fff;">
+                            <div style="width:44px;height:44px;background:rgba(16,185,129,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                                <i class="bi bi-clipboard-check" style="color:#10b981;font-size:1.2rem;"></i>
+                            </div>
+                            <h6 style="font-weight:700;color:#0f172a;margin-bottom:6px;">Practice Exams</h6>
+                            <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:16px;">Past national exams with AI-explained answers.</p>
+                            <a href="/Exams" style="display:block;text-align:center;padding:9px;border-radius:50px;border:1.5px solid #10b981;color:#10b981;font-weight:600;font-size:0.85rem;text-decoration:none;">
+                                Start Practice
+                            </a>
+                        </div>
+
+                        <!-- Download Notes -->
+                        <div class="quick-action-card" style="background:#fff;">
+                            <div style="width:44px;height:44px;background:rgba(139,92,246,0.08);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                                <i class="bi bi-download" style="color:#8b5cf6;font-size:1.2rem;"></i>
+                            </div>
+                            <h6 style="font-weight:700;color:#0f172a;margin-bottom:6px;">Download Notes</h6>
+                            <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:16px;">Save summarized notes for offline studying.</p>
+                            <a href="/Notes" style="display:block;text-align:center;padding:9px;border-radius:50px;border:1.5px solid #8b5cf6;color:#8b5cf6;font-weight:600;font-size:0.85rem;text-decoration:none;">
+                                Browse Notes
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Recent Lessons -->
+                <div class="feature-card" style="padding:28px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                        <h5 style="font-weight:700;color:#0f172a;margin:0;">Recent Lessons</h5>
+                        <a href="/Subjects" style="color:#2563eb;font-size:0.85rem;font-weight:600;text-decoration:none;">View All</a>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:12px;">
+
+                        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:#f8fafc;border-radius:14px;cursor:pointer;">
+                            <div style="width:40px;height:40px;background:rgba(16,185,129,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <i class="bi bi-activity" style="color:#10b981;font-size:1rem;"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-weight:600;color:#0f172a;font-size:0.9rem;">Chapter 3: Cell Division</div>
+                                <div style="color:#94a3b8;font-size:0.8rem;">Biology · 2 hours ago</div>
+                            </div>
+                            <i class="bi bi-arrow-right" style="color:#cbd5e1;font-size:0.9rem;"></i>
+                        </div>
+
+                        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:#f8fafc;border-radius:14px;cursor:pointer;">
+                            <div style="width:40px;height:40px;background:rgba(37,99,235,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <i class="bi bi-calculator" style="color:#2563eb;font-size:1rem;"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-weight:600;color:#0f172a;font-size:0.9rem;">Chapter 5: Trigonometry</div>
+                                <div style="color:#94a3b8;font-size:0.8rem;">Mathematics · Yesterday</div>
+                            </div>
+                            <i class="bi bi-arrow-right" style="color:#cbd5e1;font-size:0.9rem;"></i>
+                        </div>
+
+                        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:#f8fafc;border-radius:14px;cursor:pointer;">
+                            <div style="width:40px;height:40px;background:rgba(245,158,11,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                                <i class="bi bi-lightning-charge" style="color:#f59e0b;font-size:1rem;"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-weight:600;color:#0f172a;font-size:0.9rem;">Chapter 2: Motion</div>
+                                <div style="color:#94a3b8;font-size:0.8rem;">Physics · 2 days ago</div>
+                            </div>
+                            <i class="bi bi-arrow-right" style="color:#cbd5e1;font-size:0.9rem;"></i>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div style="display:flex;flex-direction:column;gap:24px;">
+
+                <!-- Learning Progress -->
+                <div class="feature-card" style="padding:28px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                        <h5 style="font-weight:700;color:#0f172a;margin:0;">Learning Progress</h5>
+                        <button style="background:#f1f5f9;border:none;border-radius:8px;padding:4px 12px;font-size:0.8rem;color:#64748b;cursor:pointer;font-weight:600;">This Week</button>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:20px;">
+
+                        <!-- Biology -->
+                        <div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <i class="bi bi-activity" style="color:#10b981;font-size:0.9rem;"></i>
+                                    <span style="font-weight:600;color:#0f172a;font-size:0.9rem;">Biology</span>
+                                </div>
+                                <span style="font-weight:700;color:#10b981;font-size:0.9rem;">75%</span>
+                            </div>
+                            <div class="progress-bar-afri">
+                                <div class="progress-fill" style="width:75%;background:linear-gradient(90deg,#10b981,#10b98199);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Mathematics -->
+                        <div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <i class="bi bi-calculator" style="color:#2563eb;font-size:0.9rem;"></i>
+                                    <span style="font-weight:600;color:#0f172a;font-size:0.9rem;">Mathematics</span>
+                                </div>
+                                <span style="font-weight:700;color:#2563eb;font-size:0.9rem;">40%</span>
+                            </div>
+                            <div class="progress-bar-afri">
+                                <div class="progress-fill" style="width:40%;background:linear-gradient(90deg,#2563eb,#2563eb99);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Physics -->
+                        <div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <i class="bi bi-lightning-charge" style="color:#f59e0b;font-size:0.9rem;"></i>
+                                    <span style="font-weight:600;color:#0f172a;font-size:0.9rem;">Physics</span>
+                                </div>
+                                <span style="font-weight:700;color:#f59e0b;font-size:0.9rem;">60%</span>
+                            </div>
+                            <div class="progress-bar-afri">
+                                <div class="progress-fill" style="width:60%;background:linear-gradient(90deg,#f59e0b,#f59e0b99);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Chemistry -->
+                        <div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <i class="bi bi-eyedropper" style="color:#8b5cf6;font-size:0.9rem;"></i>
+                                    <span style="font-weight:600;color:#0f172a;font-size:0.9rem;">Chemistry</span>
+                                </div>
+                                <span style="font-weight:700;color:#8b5cf6;font-size:0.9rem;">25%</span>
+                            </div>
+                            <div class="progress-bar-afri">
+                                <div class="progress-fill" style="width:25%;background:linear-gradient(90deg,#8b5cf6,#8b5cf699);"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button style="width:100%;margin-top:20px;padding:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;color:#64748b;font-size:0.85rem;font-weight:600;cursor:pointer;">
+                        View Detailed Report
+                    </button>
+                </div>
+
+                <!-- AI Recommendation -->
+                <div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:20px;padding:24px;border:1px solid rgba(197,160,89,0.2);">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                        <div class="ai-badge" style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                            <i class="bi bi-cpu" style="font-size:1rem;"></i>
+                        </div>
+                        <span style="color:#c5a059;font-weight:700;font-size:0.9rem;">AI Recommendation</span>
+                    </div>
+                    <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;line-height:1.6;margin-bottom:16px;">
+                        Based on your progress, I suggest reviewing <strong style="color:#fff;">Cell Mitosis</strong> in Biology before your next quiz. You're 75% through the chapter!
+                    </p>
+                    <button style="width:100%;padding:10px;background:rgba(197,160,89,0.15);border:1px solid rgba(197,160,89,0.3);border-radius:12px;color:#c5a059;font-size:0.85rem;font-weight:700;cursor:pointer;">
+                        Continue Biology →
+                    </button>
+                </div>
+
+                <!-- Upcoming Exams -->
+                <div class="feature-card" style="padding:24px;">
+                    <h6 style="font-weight:700;color:#0f172a;margin-bottom:16px;">Upcoming Exams</h6>
+
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f1f5f9;">
+                        <div>
+                            <div style="font-weight:600;color:#0f172a;font-size:0.9rem;">Biology Quiz</div>
+                            <div style="color:#94a3b8;font-size:0.8rem;">Mar 8</div>
+                        </div>
+                        <span style="background:rgba(16,185,129,0.08);color:#10b981;border-radius:50px;padding:3px 12px;font-size:0.75rem;font-weight:700;">3d left</span>
+                    </div>
+
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f1f5f9;">
+                        <div>
+                            <div style="font-weight:600;color:#0f172a;font-size:0.9rem;">Math Test</div>
+                            <div style="color:#94a3b8;font-size:0.8rem;">Mar 12</div>
+                        </div>
+                        <span style="background:rgba(37,99,235,0.08);color:#2563eb;border-radius:50px;padding:3px 12px;font-size:0.75rem;font-weight:700;">7d left</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

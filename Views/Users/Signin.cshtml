@@ -1,0 +1,86 @@
+﻿@model Afri.Models.User
+@{
+    Layout = null;
+}
+@* We don't want the sidebar layout for the login page *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        .split-container {
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .image-side {
+            flex: 1;
+            background: linear-gradient(rgba(78,115,223,0.8), rgba(78,115,223,0.8)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 40px;
+        }
+
+        .form-side {
+            width: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            padding: 40px;
+        }
+
+        .btn-primary {
+            background: #4e73df;
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="split-container">
+        <div class="image-side d-none d-md-flex text-center">
+            <div>
+                <img src="~/images/logo.png" width="180" class="mb-4">
+                <h1 class="display-4 fw-bold">Welcome Back!</h1>
+                <p class="h5 fw-light">Access your multilingual AI tutor and continue your learning journey.</p>
+            </div>
+        </div>
+        <div class="form-side shadow-lg">
+            <div class="w-100">
+                <div class="text-center d-md-none mb-4">
+                    <img src="~/images/logo.png" width="120">
+                </div>
+                <h3 class="fw-bold text-dark mb-4">Sign In</h3>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger small">@ViewBag.Error</div>
+                }
+
+                <form asp-action="Signin" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Email Address</label>
+                        <input name="email" type="email" class="form-control form-control-lg bg-light border-0" placeholder="email@afrilearn.com" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Password</label>
+                        <input name="password" type="password" class="form-control form-control-lg bg-light border-0" placeholder="••••••••" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 fw-bold shadow">Login to AfriLearn</button>
+                    <div class="text-center mt-4">
+                        <span class="small text-muted">New student? <a href="/Users/Signup" class="text-primary text-decoration-none fw-bold">Create Account</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+@model Afri.Models.StudentQuizAttempt
+@{
+    ViewData["Title"] = "Quiz Result";
+    var scorePercent = Model.Score ?? 0;
+    var passed = Model.IsPassed ?? false;
+    var passingScore = Model.Quiz?.PassingScore ?? 50;
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header @(passed ? "bg-success" : "bg-warning") text-white p-4 text-center">
+                    <h3 class="mb-1 fw-bold">@(Model.Quiz?.Title ?? "Quiz") — Result</h3>
+                    <p class="mb-0 opacity-75">Attempt on @(Model.AttemptDate?.ToString("MMMM d, yyyy 'at' h:mm tt") ?? "—")</p>
+                </div>
+                <div class="card-body p-4 bg-light">
+                    <div class="text-center py-4">
+                        <div class="display-4 fw-bold @(passed ? "text-success" : "text-warning")">@scorePercent.ToString("0")%</div>
+                        <p class="lead mb-0">
+                            @if (passed)
+                            {
+                                <span class="text-success"><i class="bi bi-check-circle-fill me-2"></i>Passed</span>
+                            }
+                            else
+                            {
+                                <span class="text-warning"><i class="bi bi-exclamation-circle-fill me-2"></i>Not passed</span>
+                            }
+                            (passing score: @passingScore%)
+                        </p>
+                    </div>
+
+                    @if (Model.StudentQuizAnswers?.Any() == true)
+                    {
+                        <hr class="my-4" />
+                        <h5 class="fw-bold mb-3">Your answers</h5>
+                        <div class="list-group list-group-flush">
+                            @{
+                                var index = 1;
+                                foreach (var answer in Model.StudentQuizAnswers)
+                                {
+                                    var yourAnswer = !string.IsNullOrEmpty(answer.AnswerText)
+                                        ? answer.AnswerText
+                                        : answer.SelectedOption?.OptionText ?? "—";
+                                    <div class="list-group-item bg-white rounded-3 mb-2 shadow-sm">
+                                        <div class="fw-bold small text-muted">Question @(index++)</div>
+                                        @if (answer.Question != null)
+                                        {
+                                            <div class="mb-1">@answer.Question.QuestionText</div>
+                                        }
+                                        <div class="text-primary"><strong>Your answer:</strong> @yourAnswer</div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="card-footer bg-white border-0 p-4 text-center">
+                    <a asp-controller="Subjects" asp-action="Index" class="btn btn-outline-primary me-2">Back to subjects</a>
+                    <a asp-action="TakeQuiz" asp-route-quizId="@Model.QuizId" class="btn btn-primary">Try again</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Afri.Models.LessonTranslation>
+
+@{
+    ViewData["Title"] = "Lesson Management";
+}
+
+<div class="container mt-4">
+    <h2>Lesson Translations</h2>
+    <p>
+        <a asp-action="CreateTranslation" class="btn btn-primary">Add New Translation</a>
+    </p>
+
+    <table class="table table-striped border">
+        <thead class="thead-dark">
+            <tr>
+                <th>Lesson</th>
+                <th>Language</th>
+                <th>Status</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Lesson.Title</td>
+                    <td>@item.Language.Name</td>
+                    <td>
+                        @if (item.IsHumanValidated == true)
+                        {
+                            <span class="badge bg-success">Validated</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Pending Review</span>
+                        }
+                    </td>
+                    <td>@item.CreatedDate?.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a href="@item.VoiceExplanationUrl" target="_blank" class="btn btn-sm btn-outline-info">Listen Audio</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr class="my-5" />
+
+    <h3>Simulate Student Actions (Integration Test)</h3>
+    <div class="card p-3 bg-light">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Download Lesson</h5>
+                <button onclick="simulateDownload(1, 101)" class="btn btn-success">Download Lesson #1 for Student #101</button>
+            </div>
+            <div class="col-md-6 border-start">
+                <h5>Trigger Offline Sync</h5>
+                <button onclick="simulateSync(101)" class="btn btn-secondary">Sync Device (Student #101)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function simulateDownload(lessonId, studentId) {
+            $.post('/Lessons/DownloadLesson', { lessonId: lessonId, studentId: studentId }, function(data) {
+                alert(data.message);
+            });
+        }
+
+        function simulateSync(studentId) {
+            $.post('/Lessons/LogSync', { studentId: studentId, deviceInfo: navigator.userAgent }, function() {
+                alert("Device synced successfully. Logs updated.");
+            });
+        }
+    </script>
+}

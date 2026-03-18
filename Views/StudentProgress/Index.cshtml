@@ -1,0 +1,52 @@
+@model List<Afri.Models.StudentProgress>
+@{
+    ViewData["Title"] = "My progress";
+    var studentName = ViewBag.StudentName as string ?? "Student";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0"><i class="bi bi-graph-up text-primary me-2"></i>My progress</h2>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="border-0 ps-4">Lesson</th>
+                                <th class="border-0">Subject</th>
+                                <th class="border-0">Status</th>
+                                <th class="border-0 text-end">Score</th>
+                                <th class="border-0 text-end pe-4">Last updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-bold">@p.Lesson?.Title</td>
+                                    <td>@(p.Lesson?.Topic?.Subject?.Name ?? "—")</td>
+                                    <td><span class="badge bg-success">@(p.CompletionStatus ?? "In progress")</span></td>
+                                    <td class="text-end">@(p.Score.HasValue ? p.Score.Value.ToString("0") + "%" : "—")</td>
+                                    <td class="text-end pe-4 text-muted">@(p.LastUpdated?.ToString("MMM d, yyyy") ?? "—")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-journal-check display-4"></i>
+                    <p class="mt-2 mb-0">No progress yet. Start lessons to see your progress here.</p>
+                    <a href="/Subjects" class="btn btn-primary mt-3">Browse subjects</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,899 @@
+@using Afri.Utilities
+@model Afri.Models.HomeDashboardViewModel?
+@inject Afri.Utilities.CurrentUser CurrentUser
+@{
+    ViewData["Title"] = "Home";
+    int userId = CurrentUser.GetUserId();
+}
+
+@if (userId == 0)
+{
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════════════════ -->
+<nav class="navbar-afri">
+    <div class="nav-inner">
+        <!-- Logo -->
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-icon">
+                <i class="bi bi-mortarboard-fill" style="color:#fff;font-size:18px;"></i>
+            </div>
+            <span class="nav-logo-text">Afri<span>Learn</span></span>
+        </a>
+
+        <!-- Nav Links -->
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#subjects">Subjects</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+
+        <!-- CTA Buttons -->
+        <div class="nav-cta">
+            <a href="/Users/Signin" class="btn-nav-signin">Sign In</a>
+            <a href="/Users/Signup" class="btn-primary-afri" style="padding:9px 22px;font-size:0.9rem;">Get Started Free</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO SECTION
+════════════════════════════════════════════════════════════ -->
+<section class="hero-section">
+    <!-- Blobs -->
+    <div class="hero-blob" style="width:500px;height:500px;background:#2563eb;top:10%;left:-10%;"></div>
+    <div class="hero-blob" style="width:400px;height:400px;background:#c5a059;bottom:5%;right:-8%;animation-delay:3s;"></div>
+
+    <div class="container-afri" style="position:relative;z-index:10;width:100%;">
+        <div class="grid-hero">
+
+            <!-- Left Column -->
+            <div class="animate-fade-up">
+                <div class="section-badge" style="background:rgba(197,160,89,0.12);color:#c5a059;border-color:rgba(197,160,89,0.3);">
+                    <i class="bi bi-stars"></i>
+                    Ethiopia's #1 AI Learning Platform
+                </div>
+
+                <h1 style="font-size:clamp(2.4rem,5vw,3.8rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:24px;letter-spacing:-1.5px;">
+                    Unlock Knowledge in Your
+                    <span class="text-gradient-gold"> Native Language.</span>
+                </h1>
+
+                <p style="font-size:1.15rem;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:40px;max-width:520px;">
+                    Break the language barrier. Master Grade 9–12 subjects with AI tutors who speak
+                    <strong style="color:rgba(255,255,255,0.9);">Amharic, Afan Oromo, and English.</strong>
+                </p>
+
+                <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:56px;">
+                    <a href="/Users/Signup" class="btn-primary-afri">
+                        <i class="bi bi-rocket-takeoff"></i>
+                        Start Learning — Free
+                    </a>
+                    <a href="#how-it-works" class="btn-outline-afri">
+                        <i class="bi bi-play-circle"></i>
+                        See How It Works
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div style="display:flex;gap:40px;flex-wrap:wrap;">
+                    <div>
+                        <div style="font-size:1.8rem;font-weight:800;color:#fff;line-height:1;">12+</div>
+                        <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:4px;">Subjects Covered</div>
+                    </div>
+                    <div>
+                        <div style="font-size:1.8rem;font-weight:800;color:#fff;line-height:1;">3</div>
+                        <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:4px;">Languages Supported</div>
+                    </div>
+                    <div>
+                        <div style="font-size:1.8rem;font-weight:800;color:#fff;line-height:1;">24/7</div>
+                        <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:4px;">AI Availability</div>
+                    </div>
+                    <div>
+                        <div style="font-size:1.8rem;font-weight:800;color:#fff;line-height:1;">Free</div>
+                        <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:4px;">To Get Started</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column — Glass Card -->
+            <div style="display:flex;justify-content:center;">
+                <div class="hero-glass">
+                    <!-- AI Badge -->
+                    <div class="ai-badge" style="width:90px;height:90px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:24px;">
+                        <i class="bi bi-cpu" style="font-size:2.2rem;"></i>
+                    </div>
+
+                    <h4 style="color:#fff;font-weight:800;font-size:1.3rem;margin-bottom:8px;">AfriLearn AI</h4>
+                    <p style="color:rgba(255,255,255,0.55);font-size:0.9rem;margin-bottom:32px;">
+                        Translating complex concepts into simple lessons instantly.
+                    </p>
+
+                    <!-- Chat Bubbles -->
+                    <div style="display:flex;flex-direction:column;gap:12px;text-align:left;">
+                        <div style="display:flex;justify-content:flex-start;">
+                            <div class="chat-bubble-left">
+                                <div class="chat-lang-label">አማርኛ</div>
+                                ፊዚክስ ምንድን ነው?
+                            </div>
+                        </div>
+                        <div style="display:flex;justify-content:flex-end;">
+                            <div class="chat-bubble-right">
+                                <div class="chat-lang-label">AI</div>
+                                Physics is the study of matter and energy...
+                            </div>
+                        </div>
+                        <div style="display:flex;justify-content:flex-start;">
+                            <div class="chat-bubble-left">
+                                <div class="chat-lang-label">Afaan Oromoo</div>
+                                Baayolojii maal?
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Language Badges -->
+                    <div style="display:flex;gap:8px;justify-content:center;margin-top:24px;flex-wrap:wrap;">
+                        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);border-radius:50px;padding:4px 14px;font-size:0.75rem;font-weight:600;">አማርኛ</span>
+                        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);border-radius:50px;padding:4px 14px;font-size:0.75rem;font-weight:600;">Afaan Oromoo</span>
+                        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);border-radius:50px;padding:4px 14px;font-size:0.75rem;font-weight:600;">English</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TRUST BAR
+════════════════════════════════════════════════════════════ -->
+<section class="trust-bar">
+    <div class="container-afri">
+        <div class="trust-bar-inner">
+            <span style="color:#94a3b8;font-size:0.85rem;font-weight:600;letter-spacing:1px;">TRUSTED BY STUDENTS ACROSS ETHIOPIA</span>
+
+            <div style="display:flex;align-items:center;gap:8px;color:#475569;">
+                <i class="bi bi-shield-check" style="color:#2563eb;font-size:1.1rem;"></i>
+                <span style="font-size:0.9rem;font-weight:600;">Curriculum Aligned</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;color:#475569;">
+                <i class="bi bi-translate" style="color:#2563eb;font-size:1.1rem;"></i>
+                <span style="font-size:0.9rem;font-weight:600;">3 Languages</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;color:#475569;">
+                <i class="bi bi-award" style="color:#2563eb;font-size:1.1rem;"></i>
+                <span style="font-size:0.9rem;font-weight:600;">Grade 9–12</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;color:#475569;">
+                <i class="bi bi-lightning-charge" style="color:#2563eb;font-size:1.1rem;"></i>
+                <span style="font-size:0.9rem;font-weight:600;">Instant AI Help</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;color:#475569;">
+                <i class="bi bi-phone" style="color:#2563eb;font-size:1.1rem;"></i>
+                <span style="font-size:0.9rem;font-weight:600;">Mobile Friendly</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FEATURES SECTION
+════════════════════════════════════════════════════════════ -->
+<section id="features" style="padding:100px 0;background:#f8fafc;">
+    <div class="container-afri">
+        <div class="section-header">
+            <div class="section-badge">
+                <i class="bi bi-stars"></i>
+                Why AfriLearn
+            </div>
+            <h2 class="section-title">
+                Everything You Need to
+                <span class="text-gradient"> Excel in School</span>
+            </h2>
+            <p class="section-subtitle">
+                Built specifically for Ethiopian students, with the tools and language support you need to succeed.
+            </p>
+        </div>
+
+        <div class="grid-features">
+
+            <!-- Feature 1 -->
+            <div class="feature-card" style="padding:32px;">
+                <div style="width:56px;height:56px;background:rgba(37,99,235,0.08);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                    <i class="bi bi-translate" style="color:#2563eb;font-size:1.5rem;"></i>
+                </div>
+                <h5 style="font-weight:700;font-size:1.1rem;color:#0f172a;margin-bottom:10px;">Learn in Your Language</h5>
+                <p style="color:#64748b;font-size:0.95rem;line-height:1.7;margin:0;">Study Biology, Physics, Math, and more directly in Amharic or Afan Oromo. No translation needed — we explain in your mother tongue.</p>
+                <div style="height:3px;background:#2563eb;border-radius:2px;margin-top:24px;width:40px;opacity:0.4;"></div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card" style="padding:32px;">
+                <div style="width:56px;height:56px;background:rgba(197,160,89,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                    <i class="bi bi-robot" style="color:#c5a059;font-size:1.5rem;"></i>
+                </div>
+                <h5 style="font-weight:700;font-size:1.1rem;color:#0f172a;margin-bottom:10px;">24/7 AI Tutor</h5>
+                <p style="color:#64748b;font-size:0.95rem;line-height:1.7;margin:0;">Stuck on a question at midnight? Our AI understands your local curriculum and context, available any time you need help.</p>
+                <div style="height:3px;background:#c5a059;border-radius:2px;margin-top:24px;width:40px;opacity:0.4;"></div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card" style="padding:32px;">
+                <div style="width:56px;height:56px;background:rgba(16,185,129,0.08);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                    <i class="bi bi-graph-up-arrow" style="color:#10b981;font-size:1.5rem;"></i>
+                </div>
+                <h5 style="font-weight:700;font-size:1.1rem;color:#0f172a;margin-bottom:10px;">Exam Ready</h5>
+                <p style="color:#64748b;font-size:0.95rem;line-height:1.7;margin:0;">Practice with past national exams and AI-generated quizzes. Track your progress and identify weak areas before exam day.</p>
+                <div style="height:3px;background:#10b981;border-radius:2px;margin-top:24px;width:40px;opacity:0.4;"></div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card" style="padding:32px;">
+                <div style="width:56px;height:56px;background:rgba(139,92,246,0.08);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                    <i class="bi bi-book-half" style="color:#8b5cf6;font-size:1.5rem;"></i>
+                </div>
+                <h5 style="font-weight:700;font-size:1.1rem;color:#0f172a;margin-bottom:10px;">Full Curriculum</h5>
+                <p style="color:#64748b;font-size:0.95rem;line-height:1.7;margin:0;">All Grade 9–12 subjects covered — from Mathematics to History. Organized by chapter and topic for easy navigation.</p>
+                <div style="height:3px;background:#8b5cf6;border-radius:2px;margin-top:24px;width:40px;opacity:0.4;"></div>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="feature-card" style="padding:32px;">
+                <div style="width:56px;height:56px;background:rgba(245,158,11,0.08);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                    <i class="bi bi-download" style="color:#f59e0b;font-size:1.5rem;"></i>
+                </div>
+                <h5 style="font-weight:700;font-size:1.1rem;color:#0f172a;margin-bottom:10px;">Offline Notes</h5>
+                <p style="color:#64748b;font-size:0.95rem;line-height:1.7;margin:0;">Download summarized notes and study offline. Perfect for areas with limited internet connectivity.</p>
+                <div style="height:3px;background:#f59e0b;border-radius:2px;margin-top:24px;width:40px;opacity:0.4;"></div>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="feature-card" style="padding:32px;">
+                <div style="width:56px;height:56px;background:rgba(239,68,68,0.08);border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                    <i class="bi bi-people" style="color:#ef4444;font-size:1.5rem;"></i>
+                </div>
+                <h5 style="font-weight:700;font-size:1.1rem;color:#0f172a;margin-bottom:10px;">Community Learning</h5>
+                <p style="color:#64748b;font-size:0.95rem;line-height:1.7;margin:0;">Join thousands of Ethiopian students. Share notes, ask questions, and learn together in a supportive community.</p>
+                <div style="height:3px;background:#ef4444;border-radius:2px;margin-top:24px;width:40px;opacity:0.4;"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════════════════════ -->
+<section id="how-it-works" style="padding:100px 0;background:#fff;">
+    <div class="container-afri">
+        <div class="section-header">
+            <div class="section-badge">
+                <i class="bi bi-map"></i>
+                How It Works
+            </div>
+            <h2 class="section-title">
+                Start Learning in
+                <span class="text-gradient"> 4 Simple Steps</span>
+            </h2>
+            <p class="section-subtitle">
+                From signup to your first AI-powered lesson in under 2 minutes.
+            </p>
+        </div>
+
+        <div class="grid-steps">
+
+            <!-- Step 1 -->
+            <div style="text-align:center;position:relative;">
+                <div style="position:absolute;top:36px;left:60%;width:80%;height:2px;background:linear-gradient(90deg,#2563eb,rgba(37,99,235,0.1));z-index:0;"></div>
+                <div style="position:relative;z-index:1;">
+                    <div style="width:72px;height:72px;background:linear-gradient(135deg,#2563eb,#1e40af);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(37,99,235,0.3);">
+                        <i class="bi bi-person-plus" style="color:#fff;font-size:1.6rem;"></i>
+                    </div>
+                    <div style="font-size:0.75rem;font-weight:800;color:#2563eb;letter-spacing:2px;margin-bottom:8px;">STEP 01</div>
+                    <h5 style="font-weight:700;color:#0f172a;margin-bottom:10px;">Create Free Account</h5>
+                    <p style="color:#64748b;font-size:0.9rem;line-height:1.7;">Sign up in seconds. No credit card required. Choose your grade and preferred language.</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div style="text-align:center;position:relative;">
+                <div style="position:absolute;top:36px;left:60%;width:80%;height:2px;background:linear-gradient(90deg,#2563eb,rgba(37,99,235,0.1));z-index:0;"></div>
+                <div style="position:relative;z-index:1;">
+                    <div style="width:72px;height:72px;background:linear-gradient(135deg,#2563eb,#1e40af);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(37,99,235,0.3);">
+                        <i class="bi bi-book-open" style="color:#fff;font-size:1.6rem;"></i>
+                    </div>
+                    <div style="font-size:0.75rem;font-weight:800;color:#2563eb;letter-spacing:2px;margin-bottom:8px;">STEP 02</div>
+                    <h5 style="font-weight:700;color:#0f172a;margin-bottom:10px;">Pick Your Subject</h5>
+                    <p style="color:#64748b;font-size:0.9rem;line-height:1.7;">Browse all Grade 9–12 subjects. Select a chapter and start reading AI-simplified lessons.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div style="text-align:center;position:relative;">
+                <div style="position:absolute;top:36px;left:60%;width:80%;height:2px;background:linear-gradient(90deg,#2563eb,rgba(37,99,235,0.1));z-index:0;"></div>
+                <div style="position:relative;z-index:1;">
+                    <div style="width:72px;height:72px;background:linear-gradient(135deg,#2563eb,#1e40af);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(37,99,235,0.3);">
+                        <i class="bi bi-chat-dots" style="color:#fff;font-size:1.6rem;"></i>
+                    </div>
+                    <div style="font-size:0.75rem;font-weight:800;color:#2563eb;letter-spacing:2px;margin-bottom:8px;">STEP 03</div>
+                    <h5 style="font-weight:700;color:#0f172a;margin-bottom:10px;">Ask the AI Tutor</h5>
+                    <p style="color:#64748b;font-size:0.9rem;line-height:1.7;">Type your question in Amharic, Afan Oromo, or English. Get instant, clear explanations.</p>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div style="text-align:center;position:relative;">
+                <div style="position:relative;z-index:1;">
+                    <div style="width:72px;height:72px;background:linear-gradient(135deg,#2563eb,#1e40af);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(37,99,235,0.3);">
+                        <i class="bi bi-trophy" style="color:#fff;font-size:1.6rem;"></i>
+                    </div>
+                    <div style="font-size:0.75rem;font-weight:800;color:#2563eb;letter-spacing:2px;margin-bottom:8px;">STEP 04</div>
+                    <h5 style="font-weight:700;color:#0f172a;margin-bottom:10px;">Practice &amp; Excel</h5>
+                    <p style="color:#64748b;font-size:0.9rem;line-height:1.7;">Take quizzes, review past exams, and track your progress toward national exam success.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SUBJECTS SECTION
+════════════════════════════════════════════════════════════ -->
+<section id="subjects" style="padding:100px 0;background:#f8fafc;">
+    <div class="container-afri">
+        <div class="section-header">
+            <div class="section-badge">
+                <i class="bi bi-collection"></i>
+                Subjects
+            </div>
+            <h2 class="section-title">
+                12+ Subjects,
+                <span class="text-gradient"> All Grades Covered</span>
+            </h2>
+            <p class="section-subtitle">
+                Complete Ethiopian national curriculum for Grade 9 through 12.
+            </p>
+        </div>
+
+        <div class="grid-subjects">
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(37,99,235,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-calculator" style="color:#2563eb;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Mathematics</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(16,185,129,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-activity" style="color:#10b981;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Biology</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(245,158,11,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-lightning-charge" style="color:#f59e0b;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Physics</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(139,92,246,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-eyedropper" style="color:#8b5cf6;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Chemistry</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(6,182,212,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-globe" style="color:#06b6d4;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Geography</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(239,68,68,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-book" style="color:#ef4444;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">History</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(197,160,89,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-chat-quote" style="color:#c5a059;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">English</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(100,116,139,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-cpu" style="color:#64748b;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">ICT</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(15,23,42,0.06);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-people" style="color:#0f172a;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Civics</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(37,99,235,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-bar-chart" style="color:#2563eb;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Economics</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 11–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(16,185,129,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-building" style="color:#10b981;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Business</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 11–12</div>
+            </div>
+
+            <div class="feature-card" style="padding:24px 20px;text-align:center;cursor:pointer;">
+                <div style="width:52px;height:52px;background:rgba(239,68,68,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                    <i class="bi bi-heart-pulse" style="color:#ef4444;font-size:1.4rem;"></i>
+                </div>
+                <div style="font-weight:700;color:#0f172a;font-size:0.95rem;margin-bottom:4px;">Health</div>
+                <div style="font-size:0.75rem;color:#94a3b8;">Grade 9–10</div>
+            </div>
+
+        </div>
+
+        <div style="text-align:center;margin-top:48px;">
+            <a href="/Users/Signup" class="btn-primary-afri">
+                <i class="bi bi-arrow-right-circle"></i>
+                Explore All Subjects
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════════════════════ -->
+<section style="padding:100px 0;background:#fff;">
+    <div class="container-afri">
+        <div class="section-header">
+            <div class="section-badge">
+                <i class="bi bi-chat-heart"></i>
+                Student Stories
+            </div>
+            <h2 class="section-title">
+                Students Are
+                <span class="text-gradient"> Thriving with AfriLearn</span>
+            </h2>
+            <p class="section-subtitle">
+                Real stories from students across Ethiopia who transformed their grades.
+            </p>
+        </div>
+
+        <div class="grid-testimonials">
+
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <div style="display:flex;gap:4px;margin-bottom:16px;">
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                </div>
+                <p style="color:#475569;font-size:0.95rem;line-height:1.75;margin-bottom:24px;font-style:italic;">
+                    &ldquo;AfriLearn changed everything for me. I was struggling with Physics but the AI explained it in Amharic and suddenly it all made sense. I scored 89% on my national exam!&rdquo;
+                </p>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="width:44px;height:44px;background:rgba(37,99,235,0.12);border:2px solid rgba(37,99,235,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2563eb;font-size:0.85rem;">TH</div>
+                    <div>
+                        <div style="font-weight:700;color:#0f172a;font-size:0.95rem;">Tigist Haile</div>
+                        <div style="color:#94a3b8;font-size:0.8rem;">Grade 12, Addis Ababa</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <div style="display:flex;gap:4px;margin-bottom:16px;">
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                </div>
+                <p style="color:#475569;font-size:0.95rem;line-height:1.75;margin-bottom:24px;font-style:italic;">
+                    &ldquo;Afaan Oromoo support is amazing. I can ask questions in my language and get clear answers. The Biology lessons are especially helpful for my upcoming exams.&rdquo;
+                </p>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="width:44px;height:44px;background:rgba(16,185,129,0.12);border:2px solid rgba(16,185,129,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#10b981;font-size:0.85rem;">BT</div>
+                    <div>
+                        <div style="font-weight:700;color:#0f172a;font-size:0.95rem;">Bekele Tadesse</div>
+                        <div style="color:#94a3b8;font-size:0.8rem;">Grade 11, Jimma</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <div style="display:flex;gap:4px;margin-bottom:16px;">
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                </div>
+                <p style="color:#475569;font-size:0.95rem;line-height:1.75;margin-bottom:24px;font-style:italic;">
+                    &ldquo;The 24/7 AI tutor is a game changer. I study late at night and always have help available. My Mathematics grade improved from 60% to 85% in just two months.&rdquo;
+                </p>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="width:44px;height:44px;background:rgba(197,160,89,0.12);border:2px solid rgba(197,160,89,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#c5a059;font-size:0.85rem;">MA</div>
+                    <div>
+                        <div style="font-weight:700;color:#0f172a;font-size:0.95rem;">Meron Alemu</div>
+                        <div style="color:#94a3b8;font-size:0.8rem;">Grade 10, Bahir Dar</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="testimonial-card">
+                <div style="display:flex;gap:4px;margin-bottom:16px;">
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                    <i class="bi bi-star-fill" style="color:#f59e0b;font-size:0.9rem;"></i>
+                </div>
+                <p style="color:#475569;font-size:0.95rem;line-height:1.75;margin-bottom:24px;font-style:italic;">
+                    &ldquo;The past exam practice feature is incredible. I went through 5 years of national exams with AI explanations for every answer. Highly recommend to all students!&rdquo;
+                </p>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="width:44px;height:44px;background:rgba(139,92,246,0.12);border:2px solid rgba(139,92,246,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#8b5cf6;font-size:0.85rem;">DK</div>
+                    <div>
+                        <div style="font-weight:700;color:#0f172a;font-size:0.95rem;">Dawit Kebede</div>
+                        <div style="color:#94a3b8;font-size:0.8rem;">Grade 12, Hawassa</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PRICING SECTION
+════════════════════════════════════════════════════════════ -->
+<section id="pricing" style="padding:100px 0;background:#0f172a;position:relative;overflow:hidden;">
+    <!-- Background glow -->
+    <div style="position:absolute;top:20%;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(37,99,235,0.15) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <div class="container-afri" style="position:relative;z-index:1;">
+        <div class="section-header">
+            <div class="section-badge gold">
+                <i class="bi bi-gem"></i>
+                Pricing
+            </div>
+            <h2 class="section-title-white">
+                Simple Plans for
+                <span class="text-gradient-gold"> Every Student</span>
+            </h2>
+            <p style="color:rgba(255,255,255,0.55);font-size:1.1rem;max-width:500px;margin:0 auto;">
+                Invest in your education. Higher grades are just one click away.
+            </p>
+        </div>
+
+        <div class="grid-pricing">
+
+            <!-- Basic Plan -->
+            <div class="pricing-card" style="padding:36px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom:8px;">
+                    <span style="font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;">BASIC</span>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px;">
+                    <span style="font-size:3rem;font-weight:900;color:#fff;line-height:1;">Free</span>
+                    <span style="color:rgba(255,255,255,0.4);font-size:0.9rem;">forever</span>
+                </div>
+                <p style="color:rgba(255,255,255,0.45);font-size:0.9rem;margin-bottom:28px;">Perfect for getting started</p>
+                <div style="margin-bottom:32px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">All 12+ Subjects Access</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">10 AI Queries per Day</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">Practice Quizzes</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-x-circle" style="color:rgba(255,255,255,0.2);font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.25);">Offline Notes Download</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-x-circle" style="color:rgba(255,255,255,0.2);font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.25);">Unlimited AI Help</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-x-circle" style="color:rgba(255,255,255,0.2);font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.25);">Priority Support</span></div>
+                </div>
+                <a href="/Users/Signup" style="display:block;text-align:center;padding:14px;border-radius:50px;font-weight:700;font-size:0.95rem;text-decoration:none;background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);transition:all 0.3s ease;">
+                    Get Started Free
+                </a>
+            </div>
+
+            <!-- Pro Monthly (Featured) -->
+            <div class="pricing-card featured" style="padding:36px;position:relative;">
+                <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#c5a059;color:#0f172a;border-radius:50px;padding:4px 18px;font-size:0.72rem;font-weight:800;letter-spacing:1px;white-space:nowrap;">MOST POPULAR</div>
+                <div style="margin-bottom:8px;">
+                    <span style="font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:1px;">PRO MONTHLY</span>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px;">
+                    <span style="font-size:3rem;font-weight:900;color:#fff;line-height:1;">$5.99</span>
+                    <span style="color:rgba(255,255,255,0.7);font-size:0.9rem;">/month</span>
+                </div>
+                <p style="color:rgba(255,255,255,0.7);font-size:0.9rem;margin-bottom:28px;">For serious exam preparation</p>
+                <div style="margin-bottom:32px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#fff;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.9);">All 12+ Subjects Access</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#fff;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.9);">Unlimited AI Queries</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#fff;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.9);">Practice Quizzes + Past Exams</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#fff;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.9);">Offline Notes Download</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#fff;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.9);">Priority Support</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#fff;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.9);">Progress Analytics</span></div>
+                </div>
+                <a href="/Users/Signup" style="display:block;text-align:center;padding:14px;border-radius:50px;font-weight:700;font-size:0.95rem;text-decoration:none;background:#fff;color:#2563eb;transition:all 0.3s ease;">
+                    Go Pro Now
+                </a>
+            </div>
+
+            <!-- Pro Annual -->
+            <div class="pricing-card" style="padding:36px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);position:relative;">
+                <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#c5a059;color:#0f172a;border-radius:50px;padding:4px 18px;font-size:0.72rem;font-weight:800;letter-spacing:1px;white-space:nowrap;">BEST VALUE</div>
+                <div style="margin-bottom:8px;">
+                    <span style="font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;">PRO ANNUAL</span>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px;">
+                    <span style="font-size:3rem;font-weight:900;color:#fff;line-height:1;">$49</span>
+                    <span style="color:rgba(255,255,255,0.4);font-size:0.9rem;">/year</span>
+                </div>
+                <p style="color:rgba(255,255,255,0.45);font-size:0.9rem;margin-bottom:28px;">Best value — save 32%</p>
+                <div style="margin-bottom:32px;">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">Everything in Pro Monthly</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">32% Savings vs Monthly</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">Early Access to New Features</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">Dedicated Study Planner</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">Parent Progress Reports</span></div>
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><i class="bi bi-check-circle-fill" style="color:#10b981;font-size:1rem;flex-shrink:0;"></i><span style="font-size:0.9rem;color:rgba(255,255,255,0.75);">Certificate of Completion</span></div>
+                </div>
+                <a href="/Users/Signup" style="display:block;text-align:center;padding:14px;border-radius:50px;font-weight:700;font-size:0.95rem;text-decoration:none;background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);transition:all 0.3s ease;">
+                    Save 32% Annually
+                </a>
+            </div>
+
+        </div>
+
+        <p style="text-align:center;color:rgba(255,255,255,0.35);font-size:0.85rem;margin-top:32px;">
+            All plans include a 7-day free trial. No credit card required to start.
+        </p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FAQ SECTION
+════════════════════════════════════════════════════════════ -->
+<section id="faq" style="padding:100px 0;background:#f8fafc;">
+    <div class="container-narrow">
+        <div class="section-header">
+            <div class="section-badge">
+                <i class="bi bi-question-circle"></i>
+                FAQ
+            </div>
+            <h2 class="section-title">
+                Frequently Asked
+                <span class="text-gradient"> Questions</span>
+            </h2>
+        </div>
+
+        <div>
+
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span>Is AfriLearn really free to use?</span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Yes! The Basic plan is completely free forever. You get access to all 12+ subjects and 10 AI queries per day at no cost. Upgrade to Pro for unlimited access.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span>Which languages does the AI tutor support?</span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Our AI tutor fully supports Amharic (አማርኛ), Afan Oromo, and English. You can ask questions and receive explanations in any of these three languages.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span>Which grades and subjects are covered?</span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    We cover the full Ethiopian national curriculum for Grade 9 through Grade 12, including Mathematics, Biology, Physics, Chemistry, Geography, History, English, ICT, Civics, Economics, Business, and Health.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span>How does the AI tutor work?</span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Our AI is trained on the Ethiopian national curriculum and understands local context. Simply type your question in your preferred language, and the AI provides a clear, step-by-step explanation tailored to your grade level.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span>Can I use AfriLearn offline?</span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Pro subscribers can download notes and study materials for offline use. The AI tutor requires an internet connection, but downloaded content is available anytime.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-btn" onclick="toggleFaq(this)">
+                    <span>How do I prepare for the national exam with AfriLearn?</span>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    We have a dedicated exam prep section with past national exam papers (multiple years), AI-explained solutions, and practice quizzes that simulate real exam conditions.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CTA SECTION
+════════════════════════════════════════════════════════════ -->
+<section style="padding:80px 24px;background:#fff;">
+    <div style="max-width:900px;margin:0 auto;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);border-radius:32px;padding:72px 48px;text-align:center;position:relative;overflow:hidden;">
+        <!-- Decorative circles -->
+        <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(37,99,235,0.15);border-radius:50%;"></div>
+        <div style="position:absolute;bottom:-40px;left:-40px;width:150px;height:150px;background:rgba(197,160,89,0.1);border-radius:50%;"></div>
+
+        <div style="position:relative;z-index:1;">
+            <div class="section-badge gold" style="margin-bottom:24px;">
+                <i class="bi bi-rocket-takeoff"></i>
+                Start Today
+            </div>
+            <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:20px;">
+                Ready to Transform Your
+                <span class="text-gradient-gold"> Academic Journey?</span>
+            </h2>
+            <p style="color:rgba(255,255,255,0.6);font-size:1.1rem;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto;">
+                Join thousands of Ethiopian students already excelling with AfriLearn. It's free to start.
+            </p>
+            <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="/Users/Signup" class="btn-gold">
+                    <i class="bi bi-person-plus"></i>
+                    Create Free Account
+                </a>
+                <a href="/Users/Signin" class="btn-outline-afri">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer style="background:#0f172a;padding:64px 24px 32px;color:rgba(255,255,255,0.6);">
+    <div class="container-afri">
+        <div class="grid-footer">
+
+            <!-- Brand -->
+            <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                    <div style="width:38px;height:38px;background:linear-gradient(135deg,#2563eb,#c5a059);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                        <i class="bi bi-mortarboard-fill" style="color:#fff;font-size:18px;"></i>
+                    </div>
+                    <span style="color:#fff;font-weight:800;font-size:1.25rem;">Afri<span style="color:#c5a059;">Learn</span></span>
+                </div>
+                <p style="font-size:0.9rem;line-height:1.7;max-width:280px;">
+                    Ethiopia's #1 AI-powered learning platform. Breaking language barriers and empowering students to excel.
+                </p>
+                <div style="display:flex;gap:12px;margin-top:20px;">
+                    <a href="#" style="width:36px;height:36px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.2s;">
+                        <i class="bi bi-facebook" style="font-size:0.9rem;"></i>
+                    </a>
+                    <a href="#" style="width:36px;height:36px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.2s;">
+                        <i class="bi bi-twitter-x" style="font-size:0.9rem;"></i>
+                    </a>
+                    <a href="#" style="width:36px;height:36px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.2s;">
+                        <i class="bi bi-instagram" style="font-size:0.9rem;"></i>
+                    </a>
+                    <a href="#" style="width:36px;height:36px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.2s;">
+                        <i class="bi bi-telegram" style="font-size:0.9rem;"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Platform Links -->
+            <div>
+                <h6 style="color:#fff;font-weight:700;margin-bottom:16px;font-size:0.9rem;">Platform</h6>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <a href="#features" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Features</a>
+                    <a href="#subjects" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Subjects</a>
+                    <a href="#pricing" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Pricing</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">AI Tutor</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Exam Prep</a>
+                </div>
+            </div>
+
+            <!-- Company Links -->
+            <div>
+                <h6 style="color:#fff;font-weight:700;margin-bottom:16px;font-size:0.9rem;">Company</h6>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">About Us</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Blog</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Careers</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Press</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Contact</a>
+                </div>
+            </div>
+
+            <!-- Support Links -->
+            <div>
+                <h6 style="color:#fff;font-weight:700;margin-bottom:16px;font-size:0.9rem;">Support</h6>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Help Center</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Privacy Policy</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Terms of Service</a>
+                    <a href="#" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.875rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Cookie Policy</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <span style="font-size:0.85rem;">&copy; 2025 AfriLearn. All rights reserved.</span>
+            <span style="font-size:0.85rem;">Made with <i class="bi bi-heart-fill" style="color:#ef4444;"></i> for Ethiopian students</span>
+        </div>
+    </div>
+</footer>
+<link href="~/css/afri-learn.css" rel="stylesheet" />
+
+
+@section Scripts {
+    <script>
+        function toggleFaq(btn) {
+            var item = btn.closest('.faq-item');
+            var isOpen = item.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(function(el) {
+                el.classList.remove('open');
+            });
+            // Open clicked if it was closed
+            if (!isOpen) {
+                item.classList.add('open');
+            }
+        }
+    </script>
+}
+}
+else
+{
+    <partial name="_DashboardPartial" model="Model" />
+}

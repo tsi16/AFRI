@@ -1,0 +1,70 @@
+@model Afri.Models.TopicMaterial
+@{
+    var embedUrl = ViewBag.EmbedUrl as string;
+    var originalUrl = ViewBag.OriginalUrl as string;
+    var topic = Model?.Topic;
+    ViewData["Title"] = Model?.Title ?? "Watch";
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Subjects" asp-action="Index">Subjects</a></li>
+            @if (topic?.Subject != null)
+            {
+                <li class="breadcrumb-item"><a asp-controller="Subjects" asp-action="Details" asp-route-id="@topic.SubjectId">@topic.Subject.Name</a></li>
+            }
+            <li class="breadcrumb-item"><a asp-action="Index" asp-route-topicId="@Model?.TopicId">@(topic?.Title ?? "Materials")</a></li>
+            <li class="breadcrumb-item active">@Model?.Title</li>
+        </ol>
+    </nav>
+
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="card-header bg-dark text-white py-3">
+            <h4 class="mb-0 fw-bold"><i class="bi bi-play-circle-fill me-2"></i>@Model?.Title</h4>
+        </div>
+        <div class="card-body p-0 bg-black">
+            @if (!string.IsNullOrEmpty(embedUrl))
+            {
+                <div class="ratio ratio-16x9">
+                    <iframe src="@embedUrl"
+                            title="@Model?.Title"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            class="border-0"></iframe>
+                </div>
+            }
+            else if (!string.IsNullOrEmpty(originalUrl))
+            {
+                <div class="p-4 text-center text-white">
+                    <p class="mb-3">This video can't be embedded here.</p>
+                    <a href="@originalUrl" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>Open in new tab
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="p-4 text-center text-white">
+                    <p class="mb-0">No video link available.</p>
+                </div>
+            }
+        </div>
+        <div class="card-footer bg-light py-3 d-flex flex-wrap gap-2 align-items-center">
+            <a asp-action="Index" asp-route-topicId="@Model?.TopicId" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i>Back to materials
+            </a>
+            @if (!string.IsNullOrEmpty(originalUrl))
+            {
+                <a href="@originalUrl" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-box-arrow-up-right me-1"></i>Open on YouTube / source
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .ratio-16x9 { max-width: 100%; margin: 0 auto; }
+    .card-body.bg-black { min-height: 320px; }
+</style>

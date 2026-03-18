@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Afri.Models.Subject>
+
+@{
+    ViewData["Title"] = "My Subjects";
+    // Get the grades we passed from the controller
+    var grades = ViewBag.Grades as IEnumerable<Afri.Models.GradeLevel>;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-0">My Subjects</h2>
+        <p class="text-muted">Explore curriculum by grade level</p>
+    </div>
+    <span class="badge bg-primary rounded-pill px-3 py-2">@Model.Count() Total Subjects</span>
+</div>
+
+<div class="d-flex flex-wrap gap-2 mb-5">
+    <button class="btn btn-primary rounded-pill px-4 filter-btn active" data-grade="all">All Grades</button>
+
+    @if (grades != null)
+    {
+        foreach (var g in grades)
+        {
+            <button class="btn btn-outline-primary rounded-pill px-4 filter-btn" data-grade="@g.Id">
+                Grade @g.Id
+            </button>
+        }
+    }
+</div>
+
+<div class="row" id="subjectGrid">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4 subject-card" data-grade="@item.GradeLevel?.Id">
+            <div class="card border-0 shadow-sm h-100 transition-hover" style="border-radius: 15px;">
+                <div class="card-body p-4 text-center">
+                    <div class="display-5 text-primary mb-3">
+                        <i class="bi bi-journal-bookmark-fill"></i>
+                    </div>
+
+                    <span class="badge bg-info-subtle text-info border-info mb-2">
+                        Grade @(item.GradeLevel?.Id ?? 0)
+                    </span>
+
+                    <h5 class="fw-bold">@item.Name</h5>
+                    <p class="text-muted small">Code: @item.Code</p>
+
+                    <div class="mt-4">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary w-100 rounded-pill shadow-sm">
+                            Open Curriculum
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.filter-btn').click(function () {
+                $('.filter-btn').removeClass('btn-primary active').addClass('btn-outline-primary');
+                $(this).addClass('btn-primary active').removeClass('btn-outline-primary');
+
+                var selectedGrade = $(this).data('grade');
+
+                if (selectedGrade === "all") {
+                    $('.subject-card').fadeIn(200);
+                } else {
+                    $('.subject-card').hide();
+                    $('.subject-card[data-grade="' + selectedGrade + '"]').fadeIn(200);
+                }
+            });
+        });
+    </script>
+}
+
+<style>
+    .transition-hover {
+        transition: all 0.3s ease;
+    }
+
+        .transition-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+        }
+</style>

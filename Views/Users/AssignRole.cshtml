@@ -1,0 +1,29 @@
+﻿@model Afri.Models.User
+@{
+    ViewData["Title"] = "Assign Role";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Assign Role for @Model.FullName</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AssignRole" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Role</label>
+                            @Html.DropDownList("roleId", (SelectList)ViewData["RoleId"], "Select role", new { @class = "form-select" })
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Role</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+@model List<Afri.Models.LeaderboardScore>
+@{
+    var currentUserId = ViewBag.CurrentUserId as int? ?? 0;
+    ViewData["Title"] = "Leaderboard";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0"><i class="bi bi-trophy-fill text-warning me-2"></i>Leaderboard</h2>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="border-0 ps-4">#</th>
+                                <th class="border-0">Student</th>
+                                <th class="border-0 text-end pe-4">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int rank = 1; }
+                            @foreach (var s in Model)
+                            {
+                                <tr class="@(s.StudentId == currentUserId ? "table-primary" : "")">
+                                    <td class="ps-4 fw-bold">@rank</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://ui-avatars.com/api/?name=@(Uri.EscapeDataString(s.Student?.FullName ?? "S"))&background=@(s.StudentId == currentUserId ? "4f46e5" : "94a3b8")&color=fff" class="rounded-circle me-2" width="36" height="36" alt="">
+                                            <span class="fw-bold">@(s.Student?.FullName ?? "Student") @(s.StudentId == currentUserId ? "(You)" : "")</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-end pe-4"><span class="badge bg-primary">@(s.TotalPoints ?? 0)</span></td>
+                                </tr>
+                                rank++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-trophy display-4"></i>
+                    <p class="mt-2 mb-0">No leaderboard entries yet. Take quizzes to earn points.</p>
+                    <a href="/Subjects" class="btn btn-primary mt-3">Browse subjects</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

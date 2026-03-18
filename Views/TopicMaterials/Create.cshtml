@@ -1,0 +1,84 @@
+@model Afri.Models.TopicMaterial
+@{
+    var topic = ViewBag.Topic as Afri.Models.Topic;
+    ViewData["Title"] = "Upload material - " + (topic?.Title ?? "Topic");
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Subjects" asp-action="Index">Subjects</a></li>
+            @if (topic?.Subject != null)
+            {
+                <li class="breadcrumb-item"><a asp-controller="Subjects" asp-action="Details" asp-route-id="@topic.SubjectId">@topic.Subject.Name</a></li>
+            }
+            <li class="breadcrumb-item"><a asp-action="Index" asp-route-topicId="@topic?.Id">@(topic?.Title) - Materials</a></li>
+            <li class="breadcrumb-item active">Upload</li>
+        </ol>
+    </nav>
+
+    <h2 class="fw-bold mb-4"><i class="bi bi-cloud-upload text-primary me-2"></i>Upload material or video</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <form asp-action="Create" asp-route-topicId="@(topic?.Id)" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Title</label>
+                    <input type="text" name="title" class="form-control" value="@Model?.Title" placeholder="e.g. Chapter 1 Notes PDF" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Type</label>
+                    <select name="resourceType" class="form-select" id="resourceType">
+                        <option value="Document" selected>Document (PDF, Word, etc.)</option>
+                        <option value="Video">Video</option>
+                        <option value="Image">Image</option>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="fileGroup">
+                    <label class="form-label fw-bold">Upload file</label>
+                    <input type="file" name="file" class="form-control" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif,.webp,.mp4,.webm,.ogg,.mov" />
+                    <small class="text-muted">Max 50 MB. Documents: PDF, Word, PowerPoint, Excel, TXT. Images: JPG, PNG, GIF, WebP. Video: MP4, WebM, OGG, MOV.</small>
+                </div>
+
+                <div class="mb-3 d-none" id="urlGroup">
+                    <label class="form-label fw-bold">YouTube or video link</label>
+                    <input type="url" name="externalUrl" id="externalUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=xxxxx" value="@Model?.ExternalUrl" />
+                    <small class="text-muted d-block mt-1"><strong>YouTube:</strong> Open the video on YouTube, click Share, then copy the link and paste it here. No file upload needed.</small>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-upload me-1"></i>Upload</button>
+                    <a asp-action="Index" asp-route-topicId="@(topic?.Id)" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleVideoUrl() {
+            var type = document.getElementById('resourceType').value;
+            var fileGroup = document.getElementById('fileGroup');
+            var urlGroup = document.getElementById('urlGroup');
+            if (type === 'Video' || type === 'Image') {
+                urlGroup.classList.remove('d-none');
+                fileGroup.querySelector('input').removeAttribute('required');
+            } else {
+                urlGroup.classList.add('d-none');
+                fileGroup.querySelector('input').setAttribute('required', 'required');
+            }
+        }
+        document.getElementById('resourceType').addEventListener('change', toggleVideoUrl);
+        toggleVideoUrl(); // run once on load so Video shows URL field if pre-selected
+    </script>
+}

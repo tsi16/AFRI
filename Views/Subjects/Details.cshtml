@@ -1,0 +1,303 @@
+ @model Afri.Models.Subject
+@inject Afri.Utilities.CurrentUser CurrentUser
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="card border-0 shadow-sm mb-4" style="border-radius: 15px; overflow: hidden;">
+    <div class="card-header bg-primary text-white p-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="display-6 fw-bold mb-0">@Model.Name</h1>
+                <p class="mb-0 opacity-75">Subject Code: @Model.Code | Grade @Model.GradeLevel.Id</p>
+            </div>
+            <div>
+                @if (CurrentUser.IsInstructor())
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-light btn-sm rounded-pill px-3">Edit Details</a>
+                }
+                <a asp-action="Index" class="btn btn-outline-light btn-sm rounded-pill px-3">Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4 bg-white">
+        <div class="row">
+            <div class="col-md-8">
+                <h5 class="fw-bold text-dark">About this Subject</h5>
+                <p class="text-muted">@Model.Description</p>
+            </div>
+            <div class="col-md-4 border-start d-none d-md-block">
+                <div class="small mb-2"><strong>Core Subject:</strong> @(Model.IsCore == true ? "Yes" : "No")</div>
+                <div class="small mb-2"><strong>Last Modified:</strong> @(Model.ModifiedDate?.ToShortDateString() ?? "Not Modified")</div>
+                <div class="small"><strong>Created:</strong> @(Model.CreatedDate?.ToShortDateString() ?? "N/A")</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
+    <div class="input-group input-group-sm w-50">
+        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-primary"></i></span>
+        <input type="text" id="curriculumSearch" class="form-control border-start-0" placeholder="Search topics or lessons...">
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-sm btn-outline-secondary" onclick="$('.accordion-collapse').collapse('hide')">Collapse All</button>
+        @if (CurrentUser.IsInstructor())
+        {
+            <button type="button" class="btn btn-primary btn-sm rounded-pill shadow-sm ms-2" onclick="openTopicModalForAdd()">
+                <i class="bi bi-plus-circle me-1"></i> Add New Topic
+            </button>
+        }
+    </div>
+</div>
+
+<h3 class="fw-bold mb-3">Curriculum Structure</h3>
+
+<div class="accordion shadow-sm" id="curriculumAccordion" style="border-radius: 15px; overflow: hidden;">
+    @foreach (var topic in Model.Topics.OrderBy(x => x.OrderNumber))
+    {
+        var collapseId = "collapse" + topic.Id;
+        var headingId = "heading" + topic.Id;
+
+        <div class="accordion-item border-0 border-bottom topic-section">
+            <h2 class="accordion-header d-flex align-items-center bg-white" id="@headingId">
+                <button class="accordion-button collapsed fw-bold text-dark p-4 flex-grow-1 topic-title" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId">
+                    <i class="bi bi-folder2-open me-2 text-primary"></i> @topic.Title
+                </button>
+                <div class="pe-3 d-flex gap-2">
+                    @if (CurrentUser.IsInstructor())
+                    {
+                        <button class="btn btn-sm btn-outline-secondary border-0" onclick="editTopic(@topic.Id, '@topic.Title')"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-outline-danger border-0" onclick="deleteTopic(@topic.Id)"><i class="bi bi-trash"></i></button>
+                    }
+                </div>
+            </h2>
+
+            <div id="@collapseId" class="accordion-collapse collapse" data-bs-parent="#curriculumAccordion">
+                <div class="accordion-body bg-light p-3">
+                    <div class="list-group list-group-flush rounded-3 shadow-sm">
+                        @foreach (var lesson in topic.Lessons)
+                        {
+                            <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 bg-white lesson-item">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-play-circle text-primary me-2"></i>
+                                    <span class="small lesson-title">@lesson.Title</span>
+                                </div>
+                                <div class="d-flex gap-1">
+                                    <button class="btn btn-xs btn-link text-primary p-0 me-2" onclick="openAiForLesson(@lesson.Id, '@lesson.Title')"><i class="bi bi-stars"></i> Ask AI</button>
+                                    @if (CurrentUser.IsInstructor())
+                                    {
+                                        <button class="btn btn-xs btn-link text-muted p-0 me-1" onclick="editLesson(@lesson.Id, @topic.Id, '@lesson.Title')"><i class="bi bi-pencil-square"></i></button>
+                                        <button class="btn btn-xs btn-link text-danger p-0" onclick="deleteLesson(@lesson.Id)"><i class="bi bi-x-circle"></i></button>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (CurrentUser.IsInstructor())
+                        {
+                            <button class="list-group-item list-group-item-action text-center small text-success py-2" onclick="openLessonModalForAdd(@topic.Id)">
+                                <i class="bi bi-plus-lg"></i> Add Lesson to @topic.Title
+                            </button>
+                        }
+                        
+                        @if (topic.Quizzes != null && topic.Quizzes.Any())
+                        {
+                            <div class="list-group-item bg-light text-center py-2">
+                                <span class="fw-bold small text-muted">Quizzes</span>
+                            </div>
+                            @foreach(var quiz in topic.Quizzes)
+                            {
+                                <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 bg-white">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-question-square text-warning me-2"></i>
+                                        <span class="small fw-bold">@quiz.Title</span>
+                                    </div>
+                                    <div class="d-flex gap-1">
+                                        @if (CurrentUser.IsInstructor())
+                                        {
+                                            <a href="/Quizs/ManageQuestions?quizId=@quiz.Id" class="btn btn-xs btn-outline-primary p-1 px-2"><i class="bi bi-gear"></i> Manage</a>
+                                        }
+                                        <a href="/Quizs/TakeQuiz?quizId=@quiz.Id" class="btn btn-xs btn-success p-1 px-2"><i class="bi bi-play-fill"></i> Take</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        
+                        @if (CurrentUser.IsInstructor())
+                        {
+                            <a href="/Quizs/Create?topicId=@topic.Id" class="list-group-item list-group-item-action text-center small text-primary py-2 mt-1">
+                                <i class="bi bi-plus-circle-fill"></i> Add Quiz to @topic.Title
+                            </a>
+                        }
+
+                        @* Materials &amp; videos (instructor upload, students access/download) *@
+                        <div class="list-group-item bg-light text-center py-2 mt-2">
+                            <span class="fw-bold small text-muted">Materials &amp; Videos</span>
+                        </div>
+                        @if (topic.TopicMaterials != null && topic.TopicMaterials.Any())
+                        {
+                            @foreach (var mat in topic.TopicMaterials)
+                            {
+                                <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 bg-white">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi @(mat.ResourceType == "Video" ? "bi-play-circle-fill" : mat.ResourceType == "Image" ? "bi-image" : "bi-file-earmark") text-info me-2"></i>
+                                        <span class="small">@mat.Title</span>
+                                    </div>
+                                    <div class="d-flex gap-1">
+                                        @if (!string.IsNullOrEmpty(mat.ExternalUrl))
+                                        {
+                                            @if (mat.ResourceType == "Video")
+                                            {
+                                                <a asp-controller="TopicMaterials" asp-action="Watch" asp-route-id="@mat.Id" class="btn btn-xs btn-primary p-1 px-2"><i class="bi bi-play-fill"></i> Watch</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@mat.ExternalUrl" target="_blank" rel="noopener" class="btn btn-xs btn-outline-primary p-1 px-2"><i class="bi bi-box-arrow-up-right"></i> Open</a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="TopicMaterials" asp-action="Download" asp-route-id="@mat.Id" class="btn btn-xs btn-outline-success p-1 px-2"><i class="bi bi-download"></i> Download</a>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <div class="list-group-item py-2 px-3 bg-white">
+                            <a asp-controller="TopicMaterials" asp-action="Index" asp-route-topicId="@topic.Id" class="btn btn-sm btn-outline-secondary w-100">
+                                <i class="bi bi-folder2-open me-1"></i> @(topic.TopicMaterials != null && topic.TopicMaterials.Any() ? "View all materials" : "Materials &amp; videos")
+                            </a>
+                            @if (CurrentUser.IsInstructor())
+                            {
+                                <a asp-controller="TopicMaterials" asp-action="Create" asp-route-topicId="@topic.Id" class="btn btn-sm btn-outline-primary w-100 mt-1"><i class="bi bi-cloud-upload me-1"></i> Upload material</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="topicModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form asp-action="SaveTopic" method="post">
+            <div class="modal-content border-0 shadow" style="border-radius: 20px;">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Topic</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="Id" id="modalTopicId" value="0" />
+                    <input type="hidden" name="SubjectId" value="@Model.Id" />
+                    <div class="form-group">
+                        <label class="small fw-bold mb-2">Topic Title</label>
+                        <input name="Title" id="topicTitleInput" class="form-control rounded-pill" required />
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-primary rounded-pill w-100">Save Topic</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="lessonModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <form asp-action="SaveLesson" method="post">
+            <div class="modal-content border-0 shadow" style="border-radius: 20px;">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Lesson</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="Id" id="modalLessonId" value="0" />
+                    <input type="hidden" name="TopicId" id="modalLessonTopicId" />
+                    <input type="hidden" name="subjectId" value="@Model.Id" />
+                    <div class="form-group">
+                        <label class="small fw-bold mb-2">Lesson Title</label>
+                        <input name="Title" id="lessonTitleInput" class="form-control rounded-pill" required />
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-success rounded-pill w-100">Save Lesson</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+
+
+
+
+    <script>
+        // --- ADD FUNCTIONS ---
+        function openTopicModalForAdd() {
+            $('#modalTopicId').val(0);
+            $('#topicTitleInput').val('');
+            $('#topicModal .modal-title').text('Create New Topic');
+            $('#topicModal').modal('show');
+        }
+
+        function openLessonModalForAdd(topicId) {
+            $('#modalLessonId').val(0);
+            $('#modalLessonTopicId').val(topicId);
+            $('#lessonTitleInput').val('');
+            $('#lessonModal .modal-title').text('Add New Lesson');
+            $('#lessonModal').modal('show');
+        }
+
+        // --- EDIT FUNCTIONS ---
+        function editTopic(id, title) {
+            $('#modalTopicId').val(id);
+            $('#topicTitleInput').val(title);
+            $('#topicModal .modal-title').text('Edit Topic');
+            $('#topicModal').modal('show');
+        }
+
+        function editLesson(lessonId, topicId, title) {
+            $('#modalLessonId').val(lessonId);
+            $('#modalLessonTopicId').val(topicId);
+            $('#lessonTitleInput').val(title);
+            $('#lessonModal .modal-title').text('Edit Lesson');
+            $('#lessonModal').modal('show');
+        }
+
+        // --- DELETE FUNCTIONS ---
+        function deleteTopic(id) {
+            if(confirm("Warning: Deleting this topic will remove all its lessons. Continue?")) {
+                window.location.href = "/Subjects/DeleteTopic/" + id;
+            }
+        }
+
+        function deleteLesson(id) {
+            if(confirm("Are you sure you want to delete this lesson?")) {
+                window.location.href = "/Subjects/DeleteLesson/" + id;
+            }
+        }
+
+        // --- SEARCH LOGIC ---
+        $(document).ready(function(){
+            $("#curriculumSearch").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".topic-section").filter(function() {
+                    var match = $(this).text().toLowerCase().indexOf(value) > -1;
+                    $(this).toggle(match);
+                });
+            });
+        });
+
+
+         
+    
+                </script>
+} 
+
+
